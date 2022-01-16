@@ -6,7 +6,7 @@ userForm.loginFormCallback = (data) => {
       location.reload();
     } else {
       userForm.setLoginErrorMessage(`Произошла ошибка ${response.error}`);
-    }
+    };
   });
 };
 
@@ -16,6 +16,6 @@ userForm.registerFormCallback = (data) => {
       location.reload();
     } else {
       userForm.setRegisterErrorMessage(`Произошла ошибка: ${response.error}`);
-    }
+    };
   });
 };

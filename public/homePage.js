@@ -1,19 +1,17 @@
 "use strict";
 //Выход из личного кабинета
-const logoutButton = new LogoutButton();
-logoutButton.action = () => {
+const logoutBtn = new LogoutButton();
+logoutBtn.action = () => {
     ApiConnector.logout = (response) => {
         if (response.success === true) {
             location.reload();
-        } else {
-            setMessage(`Произошла ошибка ${response.error}`);
-        };
+        } 
     };
 };
 //Получение информации о пользователе
 ApiConnector.current = (response) => {
-    if (response.success === true) {
-        ShowProfile(data)
+    if (response.success != true) {
+        ProfileWidget.ShowProfile;
     };
 };
 //Получение текущих курсов валюты
