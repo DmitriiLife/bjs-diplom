@@ -18,18 +18,20 @@ profileWidget.ShowProfile = () => {
         if (response.success === true) {
             profileWidget.ShowProfile(data);
         } else {
-            console.error(`Произошла ошибка: `);
+            console.error(`Произошла ошибка`);
         };
     };
 };
 //Получение текущих курсов валюты
 const ratesBoard = new RatesBoard();
-ApiConnector.getStocks = (response) => {
-    if (response.success === true) {
-        ratesBoard.clearTable;
-        ratesBoard.fillTable(response.data);
-    } else {
-        console.log(`Произошла ошибка`);
+ratesBoard.ShowProfile = () => {
+    ApiConnector.getStocks = (response) => {
+        if (response.success === true) {
+            ratesBoard.clearTable();
+            ratesBoard.fillTable(data);
+        } else {
+            console.error(`Произошла ошибка`);
+        };
     };
 };
 //Операции с деньгами
