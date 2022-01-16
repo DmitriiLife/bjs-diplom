@@ -6,7 +6,7 @@ logoutButton.action = () => {
         if (response.success === true) {
             location.reload();
         } else {
-            console.log(`Произошла ошибка`);
+            console.error(`Произошла ошибка`);
         };
     });
 };
@@ -15,7 +15,7 @@ ApiConnector.current((response) => {
     if (response.success === true) {
         ProfileWidget.showProfile(response.data);
     } else {
-        console.log(`"Произошла ошибка: " ${response.error}`);
+        console.error(`Произошла ошибка`);
     };
 });
 //Получение текущих курсов валюты +
@@ -28,16 +28,19 @@ ApiConnector.getStocks((response) => {
         console.error(`Произошла ошибка`);
     };
 });
+//Интервал
+setInterval(ApiConnector.getStocks, 60_000);
+
 //Операции с деньгами +
 //пополнение баланса +
 const moneyManager = new MoneyManager();
 moneyManager.addMoneyCallback = (data) => {
     ApiConnector.addMoney(data, (response) => {
         if (response.success === true) {
-            moneyManager.setMessage(`Успешно ${response.success}`);
+            moneyManager.setMessagesetMessage(response.success, `${response.success}`);
             ProfileWidget.showProfile(response.data);
         } else {
-            moneyManager.setMessage(`Произошла ошибка ${response.error}`);
+            moneyManager.setMessage(response.success, `${response.error}`);
         };
     });
 };
@@ -45,10 +48,10 @@ moneyManager.addMoneyCallback = (data) => {
 moneyManager.conversionMoneyCallback = (data) => {
     ApiConnector.convertMoney(data, (response) => {
         if (response.success === true) {
-            moneyManager.setMessage(`Успешно ${response.success}`);
+            moneyManager.setMessage(response.success, `${response.success}`);
             ProfileWidget.showProfile(response.data);
         } else {
-            moneyManager.setMessage(`Произошла ошибка ${response.error}`);
+            moneyManager.setMessage(response.success, `${response.error}`);
         };
     });
 };
@@ -56,10 +59,10 @@ moneyManager.conversionMoneyCallback = (data) => {
 moneyManager.sendMoneyCallback = (data) => {
     ApiConnector.transferMoney(data, (response) => {
         if (response.success === true) {
-            moneyManager.setMessage(`Успешно ${response.success}`);
+            moneyManager.setMessage(response.success, `${response.success}`);
             ProfileWidget.showProfile(response.data);
         } else {
-            moneyManager.setMessage(`Произошла ошибка ${response.error}`);
+            moneyManager.setMessage(response.success, `${response.error}`);
         };
     });
 };
@@ -80,9 +83,9 @@ favoritesWidget.addUserCallback = (data) => {
             favoritesWidget.clearTable();
             favoritesWidget.fillTable(response.data);
             moneyManager.updateUsersList(response.data);
-            favoritesWidget.setMessage(`Успешно ${response.success}`);
+            favoritesWidget.setMessage(response.success, `${response.success}`);
         } else {
-            favoritesWidget.setMessage(`Произошла ошибка ${response.error}`);
+            favoritesWidget.setMessage(response.success, `${response.error}`);
         };
     });
 };
@@ -93,9 +96,9 @@ favoritesWidget.removeUserCallback = (data) => {
             favoritesWidget.clearTable;
             favoritesWidget.fillTable;
             moneyManager.updateUsersList;
-            favoritesWidget.setMessage(`Успешно ${response.success}`);
+            favoritesWidget.setMessage(response.success, `${response.success}`);
         } else {
-            favoritesWidget.setMessage(`Произошла ошибка ${response.error}`);
+            favoritesWidget.setMessage(response.success, `${response.error}`);
         };
     });
 };
