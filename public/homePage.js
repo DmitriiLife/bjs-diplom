@@ -5,6 +5,7 @@ logoutButton.action = () => {
     ApiConnector.logout((response) => {
         if (response.success === true) {
             location.reload();
+            clearInterval(pause);
         } else {
             console.error(`Произошла ошибка`);
         };
@@ -29,7 +30,7 @@ ApiConnector.getStocks((response) => {
     };
 });
 //Интервал
-setInterval(ApiConnector.getStocks, 60_000);
+let pause = setInterval(ApiConnector.getStocks, 60_000);
 
 //Операции с деньгами +
 //пополнение баланса +
@@ -59,8 +60,8 @@ moneyManager.conversionMoneyCallback = (data) => {
 moneyManager.sendMoneyCallback = (data) => {
     ApiConnector.transferMoney(data, (response) => {
         if (response.success === true) {
-            moneyManager.setMessage(response.success, `${response.success}`);
             ProfileWidget.showProfile(response.data);
+            moneyManager.setMessage(response.success, `${response.success}`);
         } else {
             moneyManager.setMessage(response.success, `${response.error}`);
         };
@@ -79,7 +80,7 @@ ApiConnector.getFavorites((response) => {
 //добавления пользователя в список избранных +
 favoritesWidget.addUserCallback = (data) => {
     ApiConnector.addUserToFavorites(data, (response) => {
-        if (response.success) {
+        if (response.success === true) {
             favoritesWidget.clearTable();
             favoritesWidget.fillTable(response.data);
             moneyManager.updateUsersList(response.data);
@@ -93,9 +94,9 @@ favoritesWidget.addUserCallback = (data) => {
 favoritesWidget.removeUserCallback = (data) => {
     ApiConnector.removeUserFromFavorites(data, (response) => {
         if (response.success === true) {
-            favoritesWidget.clearTable;
-            favoritesWidget.fillTable;
-            moneyManager.updateUsersList;
+            favoritesWidget.clearTable();
+            favoritesWidget.fillTable(response.data);
+            moneyManager.updateUsersList(response.data);
             favoritesWidget.setMessage(response.success, `${response.success}`);
         } else {
             favoritesWidget.setMessage(response.success, `${response.error}`);
